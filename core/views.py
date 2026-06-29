@@ -6,7 +6,7 @@ from django.contrib.auth import login as auth_login
 
 from .models import Profile
 
-
+@login_required(login_url='login')
 def index(request):
     return render(request, 'index.html')
 
@@ -66,5 +66,38 @@ def logout(request):
     return redirect('login')
 
 
+
+@login_required(login_url='login')
 def settings(request):
-    return render(request, 'setting.html')
+
+    profile = Profile.objects.get(user=request.user)
+
+    if request.method == "POST":
+
+        profile.bio = request.POST['bio']
+
+
+        if request.FILES.get('image'):
+            profile.profileimg = request.FILES['image']
+
+
+        request.user.first_name = request.POST['first_name']
+        request.user.last_name = request.POST['last_name']
+
+        request.user.save()
+        profile.save()
+
+
+        return redirect('settings')
+
+
+    return render(
+        request,
+        'setting.html',
+        {
+            'profile':profile
+        }
+    )
+
+def help_request(request):
+    return render(request, 'help.html')
