@@ -20,9 +20,10 @@ Building a Django-based social media platform where users can create profiles, p
 - HTML, CSS, JavaScript (Bootstrap)
 
 ## Progress
-## Demo Video
+<img width="1918" height="979" alt="Screenshot 2026-07-02 110034" src="https://github.com/user-attachments/assets/fe94eb04-d787-43de-b57c-07c9da14fce5" />
+<img width="1920" height="986" alt="Screenshot (176)" src="https://github.com/user-attachments/assets/f7194968-221e-4ad8-92ce-c7b909c27f57" />
 
-<video src="https://github.com/castle-dot/social-media/raw/main/demo_video.mp4" controls></video>
+
 
 ## How to Run Locally
 ```bash
