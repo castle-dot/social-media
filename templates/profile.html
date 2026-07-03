@@ -148,17 +148,19 @@ style="height: 250px; width: 100%; object-fit: cover;" alt="">
     {% for post in posts %}
 
         <li>
-            <a class="strip"
-               href="{{ post.image.url }}"
-               title=""
-               data-strip-group="mygroup"
-               data-strip-group-options="loop: false">
+            {% if post.image %}
+<a class="strip"
+   href="{{ post.image.url }}"
+   title=""
+   data-strip-group="mygroup"
+   data-strip-group-options="loop: false">
 
-                <img src="{{ post.image.url }}"
-                     style="height:250px; width:300px; object-fit:cover;"
-                     alt="">
+    <img src="{{ post.image.url }}"
+         style="height:250px; width:300px; object-fit:cover;"
+         alt="">
 
-            </a>
+</a>
+{% endif %}
         </li>
 
     {% empty %}
