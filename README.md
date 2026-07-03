@@ -15,7 +15,12 @@ This isn't just another generic tutorial clone; it features custom logic for mix
 * **Frontend:** HTML5, CSS3, Vanilla JavaScript, and UIkit for the responsive layouts and drop-downs. 
 * **Architecture:** Traditional Server-Side Rendering (SSR). No messy third-party APIs here—just clean, native Django template tags doing the heavy lifting.
 
----
+<img width="1919" height="944" alt="Screenshot 2026-07-04 001917" src="https://github.com/user-attachments/assets/1bdc31af-fe8a-4232-b9ae-610a66de2bf2" />
+<img width="1919" height="943" alt="Screenshot 2026-07-04 001319" src="https://github.com/user-attachments/assets/8d70c9fd-bbbe-4a0f-94fa-995efd1f7195" />
+<img width="1384" height="944" alt="Screenshot 2026-07-04 001427" src="https://github.com/user-attachments/assets/754c15f1-e8e3-4781-846d-9b567d588802" />
+<img width="1919" height="947" alt="Screenshot 2026-07-04 001637" src="https://github.com/user-attachments/assets/9743887c-3741-4da4-802e-5adb0b09a2b6" />
+
+
 
 ### 🚀 Getting Started (Local Setup)
 
