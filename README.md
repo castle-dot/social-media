@@ -1,3 +1,8 @@
+You are completely right, my bad! I accidentally nested code blocks inside another code block, which breaks the Markdown formatting. Good catch.
+
+Here is the properly formatted raw Markdown. You can copy this entire block directly into your `README.md` file:
+
+```markdown
 # 📱 Social Media Sandbox
 
 Welcome to the repo! I built this project primarily as a portfolio piece to deepen my understanding of backend architecture, but it quickly evolved into a fun, private sandbox for my friends and me to share updates, terrible memes, and videos. 
@@ -25,3 +30,51 @@ Want to spin this up on your own machine? It’s super straightforward. Follow t
 ```bash
 git clone [https://github.com/castle-dot/social-media.git](https://github.com/castle-dot/social-media.git)
 cd social-media
+```
+
+**2. Set up your virtual environment**
+It is always best to keep your dependencies isolated. 
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# Mac/Linux
+python3 -m venv venv
+source venv/bin/activate
+```
+
+**3. Install dependencies**
+*(Note: Make sure you have Django and Pillow installed for image handling!)*
+```bash
+pip install -r requirements.txt
+```
+
+**4. Run database migrations**
+This sets up the SQLite database and creates the necessary tables for Users, Posts, etc.
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+**5. Create a Superuser (Optional but recommended)**
+If you want to access the Django Admin panel to manage posts and users:
+```bash
+python manage.py createsuperuser
+```
+
+**6. Fire it up!**
+```bash
+python manage.py runserver
+```
+Navigate to `http://127.0.0.1:8000` in your browser, create an account, and start posting!
+
+---
+
+### 💡 What I Learned
+Building this pushed me to solve real-world problems like handling "orphaned" database records, conditionally rendering front-end UI based on complex backend data states, and managing media files safely in a local environment. 
+
+### 🤝 Contributing
+Since this is a personal portfolio piece and a playground for my friends, I'm not actively looking for major pull requests. However, if you spot a bug or have a cool idea for a feature, feel free to open an issue!
+
+```
