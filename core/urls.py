@@ -1,6 +1,6 @@
 
 from django.urls import path
-from .views import index, signup, login, logout, settings
+from .views import index, profile, signup, login, logout, settings, upload, like_post
 
 
 urlpatterns = [
@@ -9,4 +9,7 @@ urlpatterns = [
     path('login/', login, name = 'login'),
     path('logout/', logout, name = 'logout'),
     path('settings/', settings, name = 'settings'),
+    path('upload/', upload, name = 'upload'),
+    path('like/<uuid:id>/', like_post, name='like_post'),
+    path('profile/<str:username>/', profile, name='profile'),
 ]

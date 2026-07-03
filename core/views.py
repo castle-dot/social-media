@@ -3,13 +3,27 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login
+from django.http import JsonResponse
 
-from .models import Profile
+from django.shortcuts import get_object_or_404
+
+from .models import Post, Profile
 
 @login_required(login_url='login')
 def index(request):
-    return render(request, 'index.html')
-
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=request.user)
+    post_list = list(Post.objects.all().order_by('-created_at'))
+    
+    return render(
+        request, 
+        'index.html', 
+        {
+            'profile': profile,
+            'posts': post_list
+        }
+    )
+   
 def signup(request):
 
     if request.method == 'POST':
@@ -99,5 +113,56 @@ def settings(request):
         }
     )
 
-def help_request(request):
-    return render(request, 'help.html')
+@login_required(login_url='login')
+def upload(request):
+    if request.method == 'POST':
+        # Must match name="image_upload" from your HTML input field
+        image = request.FILES.get('image_upload')
+        caption = request.POST.get('caption', '')
+
+        if image:
+            post = Post.objects.create(
+                user=request.user,
+                image=image,       # Saves the file data to your Post model's image field
+                caption=caption
+            )
+            post.save()
+            return redirect('index')
+
+    # Bounces back safely if it's a GET request or missing a file
+    return redirect('index')
+
+@login_required(login_url='login')
+def like_post(request, id):
+    post = get_object_or_404(Post, id=id)
+    
+    # Toggle the like
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
+    
+    # Return JSON instead of redirecting
+    return JsonResponse({
+        'liked': liked,
+        'likes_count': post.likes.count()
+    })
+
+@login_required(login_url='login')
+def profile(request, username):
+
+    user = get_object_or_404(User, username=username)
+
+    profile = Profile.objects.get(user=user)
+
+    posts = Post.objects.filter(user=user)
+
+    context = {
+        'profile_user': user,
+        'profile': profile,
+        'posts': posts,
+    }
+
+    return render(request, 'profile.html', context)
