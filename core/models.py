@@ -17,6 +17,7 @@ class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='post_images')
+    video = models.FileField(upload_to='post_videos', blank=True, null=True)
     caption = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(
@@ -24,6 +25,18 @@ class Post(models.Model):
         related_name='liked_posts',
         blank=True
     )
+    followers = models.ManyToManyField(
+        User,
+        related_name="following",
+        blank=True
+    )
 
     def __str__(self):
         return f"{self.user.username}'s Post"
+    
+class FollowersCount(models.Model):
+    follower = models.CharField(max_length=100) # The user doing the following
+    user = models.CharField(max_length=100)     # The user being followed
+    
+    def __str__(self):
+        return self.user
