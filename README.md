@@ -1,8 +1,3 @@
-You are completely right, my bad! I accidentally nested code blocks inside another code block, which breaks the Markdown formatting. Good catch.
-
-Here is the properly formatted raw Markdown. You can copy this entire block directly into your `README.md` file:
-
-```markdown
 # 📱 Social Media Sandbox
 
 Welcome to the repo! I built this project primarily as a portfolio piece to deepen my understanding of backend architecture, but it quickly evolved into a fun, private sandbox for my friends and me to share updates, terrible memes, and videos. 
@@ -76,5 +71,3 @@ Building this pushed me to solve real-world problems like handling "orphaned" da
 
 ### 🤝 Contributing
 Since this is a personal portfolio piece and a playground for my friends, I'm not actively looking for major pull requests. However, if you spot a bug or have a cool idea for a feature, feel free to open an issue!
-
-```
