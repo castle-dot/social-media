@@ -323,21 +323,48 @@
         </div>
 
     </button>
+        <!-- THE TRIGGER LINK -->
+<button type="button" 
+        onclick="toggleComments('{{ post.id }}')" 
+        class="flex items-center space-x-2" 
+        style="background: none; border: none; cursor: pointer; color: black; padding: 0;">
+    
+    <div class="p-2 rounded-full text-black">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 20 20"
+             fill="currentColor"
+             width="25"
+             height="25">
+            <path fill-rule="evenodd"
+                  d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+                  clip-rule="evenodd"/>
+        </svg>
+    </div>
 
-    <a href="#" class="flex items-center space-x-2">
-        <div class="p-2 rounded-full text-black">
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 viewBox="0 0 20 20"
-                 fill="currentColor"
-                 width="25"
-                 height="25">
+    <span>{{ post.comments.count }}</span>
+</button>
+<!-- THE COMMENT SECTION -->
+<div id="comments-{{ post.id }}" style="display:none; margin-top: 15px; border-top: 1px solid #ccc; padding-top: 10px;">
+    
+    <!-- Existing Comments -->
+    <div style="margin-bottom: 10px;">
+        {% for comment in post.comments.all %}
+            <div style="background: #f9f9f9; padding: 8px; margin-bottom: 5px; border-radius: 4px;">
+                <strong>{{ comment.user.username }}</strong>: {{ comment.text }}
+            </div>
+        {% empty %}
+            <p style="font-size: 0.8rem; color: #666;">No comments yet.</p>
+        {% endfor %}
+    </div>
 
-                <path fill-rule="evenodd"
-                      d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                      clip-rule="evenodd"/>
-            </svg>
-        </div>
-    </a>
+    <!-- The Form (Must be OUTSIDE any other form) -->
+    <form action="{% url 'add_comment' post.id %}" method="POST" style="display:flex; gap:5px;">
+        {% csrf_token %}
+        <input type="text" name="comment" placeholder="Write a comment..." 
+               style="flex-grow:1; padding: 5px;" required>
+        <button type="submit" style="padding: 5px 10px;">Post</button>
+    </form>
+</div>
 
    {% if post.image %}
 <a href="{{ post.image.url }}" class="flex items-center space-x-2 flex-1 justify-end" download>
@@ -388,7 +415,39 @@
 
         {% endif %}
 
+        
+
     </div>
+
+    <div id="comments-{{ post.id }}" class="hidden mt-4">
+
+    <div class="space-y-2 mb-3">
+        {% for comment in post.comments.all %}
+            <div class="bg-gray-100 rounded-lg p-3">
+                <strong>{{ comment.user.username }}</strong>
+                <p>{{ comment.text }}</p>
+            </div>
+        {% empty %}
+            <p class="text-gray-500 text-sm">No comments yet.</p>
+        {% endfor %}
+    </div>
+
+    <form action="{% url 'add_comment' post.id %}" method="POST" class="flex gap-2">
+        {% csrf_token %}
+
+        <input type="text" 
+               name="comment" 
+               placeholder="Write a comment..." 
+               class="flex-1 border rounded-full px-4 py-2" 
+               required>
+
+        <button type="submit" 
+                class="bg-blue-500 text-white px-4 rounded-full">
+            Post
+        </button>
+    </form>
+
+</div>
 
 </div>
         <!--<div class="border-t pt-4 space-y-4 ">
@@ -412,13 +471,13 @@
             </div>
         </div>-->
 
-        <div class="bg-gray-100 bg-gray-100 rounded-full rounded-md relative ">
+        <!--<div class="bg-gray-100 bg-gray-100 rounded-full rounded-md relative ">
             <input type="text" placeholder="post a comment" class="bg-transparent max-h-10 shadow-none">
             <div class="absolute bottom-0 flex h-full items-center right-0 right-3 text-xl space-x-2">
                 <a href="#"> <i class="uil-image"></i></a>
                 <a href="#"> <i class="uil-video"></i></a>
             </div>
-        </div>
+        </div>-->
 
     </div>
 
@@ -1023,6 +1082,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+</script>
+
+<script>
+function toggleComments(postId) {
+    const section = document.getElementById("comments-" + postId);
+    if (section.style.display === "none") {
+        section.style.display = "block";
+    } else {
+        section.style.display = "none";
+    }
+}
 </script>
 </body>
 

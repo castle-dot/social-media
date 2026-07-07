@@ -1,5 +1,6 @@
+from django import views
 from django.urls import path
-from .views import index, profile, search_ajax, signup, login, logout, settings, upload, like_post, follow
+from .views import add_comment, index, profile, search_ajax, signup, login, logout, settings, upload, like_post, follow
 
 
 urlpatterns = [
@@ -13,4 +14,5 @@ urlpatterns = [
     path('profile/<str:username>/', profile, name='profile'),
     path('follow', follow, name='follow'),
     path('search-ajax', search_ajax, name='search-ajax'),
+    path('comment/<uuid:post_id>/', add_comment, name='add_comment'),
 ]

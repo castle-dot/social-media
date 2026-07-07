@@ -7,7 +7,7 @@ from django.http import JsonResponse
 
 from django.shortcuts import get_object_or_404
 
-from .models import FollowersCount, Post, Profile
+from .models import FollowersCount, Post, Profile, Comment
 
 @login_required(login_url='login')
 def index(request):
@@ -204,3 +204,19 @@ def search_ajax(request):
     users = User.objects.filter(username__icontains=query)[:5] 
     results = [{'username': u.username} for u in users]
     return JsonResponse({'results': results})
+
+@login_required(login_url='login')
+def add_comment(request, post_id):
+    if request.method == "POST":
+        post = get_object_or_404(Post, id=post_id)
+
+        text = request.POST.get("comment")
+
+        if text.strip():
+            Comment.objects.create(
+                user=request.user,
+                post=post,
+                text=text
+            )
+
+    return redirect(request.META.get("HTTP_REFERER", "index"))
